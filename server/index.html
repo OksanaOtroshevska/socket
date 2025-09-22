@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Express.js</title>
+  </head>
+
+  <body>
+    <h3 id="socketId"></h3>
+    <form id="form">
+      <p><textarea id="textarea" rows="5"></textarea></p>
+      <button type="submit">Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io()
+      const form = document.querySelector("#form")
+      const textarea = document.querySelector("#textarea")
+
+      const socketId = document.querySelector("#socketId")
+
+      socket.on("connect", () => {
+        if (socketId) {
+          socketId.textContent = `Your socket ID: ${socket.id}`
+        }
+      });
+
+      //form.addEventListener- слушаем событие отправки формы
+      //event.preventDefault() - отменяем стандартное поведение формы
+      form.addEventListener("submit", event => {
+        event.preventDefault()
+        const message = textarea.value
+        textarea.value = ""
+        socket.emit("chat", message)
+      });
+    </script>
+  </body>
+</html>
