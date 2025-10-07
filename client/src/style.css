@@ -1,0 +1,181 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  background: linear-gradient(135deg, #3a3545, #5a76f6, #4cc9f0);
+  color: white;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #f7df1eaa);
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* Контейнер сообщений */
+#messages {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  overflow-y: auto;
+  margin: 20px auto;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background-color: #262626;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Сообщения */
+.message {
+  padding: 10px 14px;
+  margin: 6px 0;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.4;
+  max-width: 70%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.3s;
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+/* Анимация появления */
+/* fadeIn- появление с легким смещением вверх */
+@keyframes fadeIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.my-message:hover,
+.other-message:hover {
+  transform: scale(1.02);
+}
+
+
+/* Мои сообщения (справа, фиолетовые) */
+.my-message {
+  align-self: flex-end;
+  background-color: #6a5acd;
+  color: #fff;
+}
+
+/* Сообщения других пользователей (слева, бирюзовые) */
+.other-message {
+  align-self: flex-start;
+  background-color: #2aa198;
+  color: #fff;
+}
+
+#socketId {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+
+/* Прокрутка */
+#messages::-webkit-scrollbar {
+  width: 8px;
+}
+#messages::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+#messages::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}

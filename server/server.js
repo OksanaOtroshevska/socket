@@ -6,7 +6,7 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
-//порт на котором будет работать наш сервер
+
 const PORT = 3000;
 
 //создаем приложение на express
@@ -35,10 +35,10 @@ app.get("/", (request, response) => {
 socket.on("connection", (connection) => {
     console.log("New client connected", connection.id);
 
-    connection.on("chat", (message) => {
-        // происходит какое-то сохранение сообщения в базу данных
-        socket.emit("chat", message);
-    });
+connection.on("chat", msgData => {
+  socket.emit("chat", msgData)
+})
+
 });
 
 //говорим, что наш сервер должен слушать 3000 порт на нашем компьютере
