@@ -58,25 +58,25 @@ textarea.addEventListener("keydown", (event) => {
 });
 
 // при получении сообщения
-socket.on("chat", (msgData) => {
-  const div = document.createElement("div");
-  div.classList.add("message");
+// socket.on("chat", (msgData) => {
+//   const div = document.createElement("div");
+//   div.classList.add("message");
 
-  // определяем, кто отправил сообщение
-  if (msgData.id === socket.id) {
-    div.classList.add("my-message");
-  } else {
-    div.classList.add("other-message");
-  }
+//   // определяем, кто отправил сообщение
+//   if (msgData.id === socket.id) {
+//     div.classList.add("my-message");
+//   } else {
+//     div.classList.add("other-message");
+//   }
 
-  // добавляем текст
-  div.textContent = `${msgData.user}: ${msgData.text}`;
+//   // добавляем текст
+//   div.textContent = `${msgData.user}: ${msgData.text}`;
 
-  // добавляем в контейнер
-  messages.appendChild(div);
+//   // добавляем в контейнер
+//   messages.appendChild(div);
 
-  // автопрокрутка вниз
-  messages.scrollTop = messages.scrollHeight;
-});
+//   // автопрокрутка вниз
+//   messages.scrollTop = messages.scrollHeight;
+// });
 
 

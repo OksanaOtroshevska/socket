@@ -1,5 +1,5 @@
 function Message () {
-  return <div>Igor: Hallo!</div>;
+  return <div>Привет!</div>;
 }
 
 export default Message;
