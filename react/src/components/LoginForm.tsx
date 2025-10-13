@@ -1,3 +1,4 @@
+import "./LoginForm.css";
 import { useState } from "react";
 import Button from "../shared/Button"
 import TextField from "../shared/TextField"
@@ -29,8 +30,11 @@ function LoginForm() {
 
 // onSubmit- это обработчик события отправки формы
   return (
-    <form onSubmit={onSubmit}>
-      <TextField value={username} onChange={setUsername} />
+    <form className="login-form" onSubmit={onSubmit}>
+      <TextField 
+      value={username} 
+      onChange={setUsername} 
+      />
       <Button label="Войти" type="submit" />
     </form>
   );

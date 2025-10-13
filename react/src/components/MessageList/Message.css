@@ -1,0 +1,12 @@
+.message {
+  background-color: #e9e9ff;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  width: fit-content;
+}
+
+.message__author {
+  color: #6c63ff;
+  margin-right: 0.5rem;
+}

@@ -1,3 +1,4 @@
+import "./MessageForm.css";
 import Button from "../shared/Button"
 import TextField from "../shared/TextField"
 import { useState } from "react"
@@ -17,11 +18,15 @@ function MessageForm() {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <TextField value={message} onChange={setMessage} variant="textarea" />
+    <form className="message-form" onSubmit={onSubmit}>
+      <TextField 
+      value={message} 
+      onChange={setMessage} 
+      variant="textarea" 
+      />
       <Button label="Отправить" type="submit" />
     </form>
-  )
+  );
 }
 
 export default MessageForm

@@ -1,6 +1,7 @@
-
+import "./App.css";
 import Chat from "./pages/Chat"
 import Welcome from "./pages/Welcome"
+
 
 
 // useEffect - это хук, который позволяет выполнять побочные эффекты в функциональных компонентах React
@@ -15,10 +16,14 @@ import Welcome from "./pages/Welcome"
 function App() {
   
   return (
-    <div className="app"> 
+    <div className="app">
+
+      <div className="app_container">
       <Welcome />
       <hr />
       <Chat />
+      </div> 
+
     </div>
   );
 }

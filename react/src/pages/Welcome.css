@@ -1,0 +1,12 @@
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome__title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}

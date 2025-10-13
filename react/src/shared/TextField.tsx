@@ -17,7 +17,7 @@ function TextField(props: Props) {
   if (variant === "textarea") {
     return <textarea value={value} onChange={onChange}/>;
   } else {
-    return <input type="text" value={value} onChange={onChange} />;
+    return <input type="text" value={value} onChange={onChange}/>;
   }
 }
 

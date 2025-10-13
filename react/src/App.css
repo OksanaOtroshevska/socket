@@ -1,0 +1,20 @@
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6c63ff, #44c0cb);
+  font-family: "Inter", sans-serif;
+}
+
+.app__container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  width: 80%;
+  max-width: 1000px;
+}
