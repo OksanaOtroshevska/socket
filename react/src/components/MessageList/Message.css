@@ -1,12 +1,23 @@
 .message {
-  background-color: #e9e9ff;
-  padding: 0.6rem 1rem;
-  border-radius: 10px;
-  margin-bottom: 0.5rem;
-  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  background: #e7e7e7;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 60%;
 }
 
-.message__author {
-  color: #6c63ff;
-  margin-right: 0.5rem;
+.message.own {
+  align-self: flex-end;
+  background: #b3e5fc;
+}
+
+.author {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.text {
+  word-break: break-word;
 }
