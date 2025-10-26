@@ -6,27 +6,26 @@ import DateBlock from "./Date"
 // Внутри компонента используется пользовательский хук useSocket для установления соединения с сервером WebSocket
 // Компонент возвращает JSX-разметку, которая включает в себя компонент Date и два компонента Message
 
-interface MessageData {
-  user: string;
-  text: string;
-  time?: string;
-}
 
 interface MessageListProps {
-  messages: MessageData[];
+  messages: {
+    id: string;
+    author: string;
+    text: string;
+  }[];
   currentUser: string;
 }
 
 function MessageList({ messages, currentUser }: MessageListProps) {
   return (
     <div className="message-list">
-      <DateBlock date="25 September" />
-      {messages.map((msg, index) => (
+      <DateBlock date="Сегодня" />
+      {messages.map((msg) => (
         <Message
-          key={index}
-          author={msg.user}
+          key={msg.id + msg.text}
+          author={msg.author}
           text={msg.text}
-          isOwn={msg.user === currentUser}
+          isOwn={msg.author === currentUser}
         />
       ))}
     </div>

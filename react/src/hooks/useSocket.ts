@@ -1,30 +1,46 @@
-import { io } from "socket.io-client";
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react";
+import { io, Socket } from "socket.io-client";
 
-type Socket = ReturnType<typeof io> | null;
-// useSocket - это пользовательский хук, который может использоваться для управления соединением с веб-сокетом
-// В данном случае он использует библиотеку socket.io-client для установления соединения с сервером по адресу "http://localhost:3000"
-// Хук возвращает текущее состояние соединения (socket) и функцию для его обновления (setSocket)
-// Внутри хука используется useEffect для инициализации соединения при монтировании компонента
-// Когда компонент, использующий этот хук, монтируется, создается новое соединение с сервером
-// Затем это соединение сохраняется в состоянии с помощью функции setSocket
-// Таким образом, useSocket позволяет компонентам React легко управлять соединением с веб-сокетом и реагировать на его изменения
-// Например, компоненты могут использовать это соединение для отправки и получения сообщений в реальном времени
-// Это особенно полезно для приложений, требующих постоянного обмена данными между клиентом и сервером, таких как чаты или игровые приложения
-//useState - это хук, который позволяет добавлять состояние в функциональные компоненты React
-//useEffect - это хук, который позволяет выполнять побочные эффекты в функциональных компонентах React
-//io - это функция из библиотеки socket.io-client, которая используется для создания соединения с сервером WebSocket
-export function useSocket () {
-  const ref = useRef<Socket>(null);
+export interface MessageData {
+  id: string;
+  author: string;
+  text: string;
+}
+
+export function useSocket(currentUser: string) {
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [messages, setMessages] = useState<MessageData[]>([]);
 
   useEffect(() => {
-    if (!ref.current) {
-    ref.current = io("http://localhost:3000");
-    }
+    const newSocket = io("http://localhost:3000");
+    setSocket(newSocket);
 
+    newSocket.on("connect", () => {
+      console.log("Connected:", newSocket.id);
+    });
+
+    newSocket.on("message", (message: MessageData) => {
+      setMessages((prev) => [...prev, message]);
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
 
-  return ref.current;
+  const sendMessage = (text: string) => {
+    if (socket) {
+      const message: MessageData = {
+        id: socket.id || Math.random().toString(36).substring(2, 9), // запасной id
+        author: currentUser,
+        text,
+      };
+      socket.emit("message", message);
+      setMessages((prev: MessageData[]) => [...prev, message]); // ✅ теперь типизировано
+    }
+  };
+
+  return { messages, sendMessage };
 }
 
 export default useSocket;
