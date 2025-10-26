@@ -3,17 +3,15 @@ import "./Message.css";
 interface MessageProps {
   author: string;
   text: string;
-  isOwn?: boolean; // свойство для определения цвета "моего" сообщения
+  isOwn?: boolean;
 }
 
-function Message({ author, text, isOwn = false }: MessageProps) {
+function Message({ author, text, isOwn }: MessageProps) {
   return (
-    <div className={`message ${isOwn ? "own" : ""}`}>
-      <div className="author">{author}</div>
-      <div className="text">{text}</div>
+    <div className={`message ${isOwn ? "my-message" : "other-message"}`}>
+      <b>{author}:</b> {text}
     </div>
   );
 }
-
 
 export default Message;

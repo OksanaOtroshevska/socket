@@ -1,28 +1,29 @@
-import "./MessageList.css"
-import Message from "./Message"
-import DateBlock from "./Date"
+import "./MessageList.css";
+import Message from "./Message";
+import DateBlock from "./Date";
 
-// MessageList - это компонент React, который отображает список сообщений
-// Внутри компонента используется пользовательский хук useSocket для установления соединения с сервером WebSocket
-// Компонент возвращает JSX-разметку, которая включает в себя компонент Date и два компонента Message
-
+interface MessageData {
+  id: number;
+  author: string;
+  text: string;
+}
 
 interface MessageListProps {
-  messages: {
-    id: string;
-    author: string;
-    text: string;
-  }[];
   currentUser: string;
 }
 
-function MessageList({ messages, currentUser }: MessageListProps) {
+function MessageList({ currentUser }: MessageListProps) {
+  const messages: MessageData[] = [
+    { id: 1, author: "Оксана", text: "Привет!" },
+    { id: 2, author: "Алекс", text: "Привет, как дела?" }
+  ];
+
   return (
     <div className="message-list">
-      <DateBlock date="Сегодня" />
+      <DateBlock date="25 September" />
       {messages.map((msg) => (
         <Message
-          key={msg.id + msg.text}
+          key={msg.id}
           author={msg.author}
           text={msg.text}
           isOwn={msg.author === currentUser}
@@ -32,4 +33,4 @@ function MessageList({ messages, currentUser }: MessageListProps) {
   );
 }
 
-export default MessageList
+export default MessageList;

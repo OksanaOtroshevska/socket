@@ -1,31 +1,22 @@
-import "./App.css";
-import Chat from "./pages/Chat"
-import Welcome from "./pages/Welcome"
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { UserNameContext } from "./context/UserNameContext";
+import Welcome from "./pages/Welcome";
+import Chat from "./pages/Chat";
 
-
-
-// useEffect - это хук, который позволяет выполнять побочные эффекты в функциональных компонентах React
-// Побочные эффекты могут включать в себя операции, такие как получение данных с сервера, настройка подписок или изменение DOM
-// useEffect принимает два аргумента: функцию эффекта {} и массив зависимостей []
-// Функция эффекта выполняется после каждого рендера компонента, если значения в массиве зависимостей изменились
-// Если массив зависимостей пуст, эффект выполняется только один раз при монтировании компонента
-// В данном случае useEffect используется для выполнения пустой функции при монтировании компонента App
-// Это может быть полезно, если в будущем потребуется добавить какую-либо логику, которая должна выполняться при загрузке приложения
-// Например, можно использовать useEffect для инициализации соединения с сервером или настройки глобальных обработчиков событий
-// Таким образом, useEffect помогает управлять побочными эффектами в компонентах React, обеспечивая более чистый и организованный код
 function App() {
-  
+  const [username, setUsername] = useState<string>("");
+
   return (
-    <div className="app">
-
-      <div className="app_container">
-      <Welcome />
-      <hr />
-      <Chat />
-      </div> 
-
-    </div>
+    <UserNameContext.Provider value={username}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Welcome setUsername={setUsername} />} />
+          <Route path="/chat" element={<Chat username={username} />} />
+        </Routes>
+      </Router>
+    </UserNameContext.Provider>
   );
 }
 
-export default App
+export default App;

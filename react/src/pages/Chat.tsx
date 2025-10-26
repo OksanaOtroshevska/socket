@@ -1,21 +1,15 @@
-import "./Chat.css";
-import { useState } from "react";
-import { useSocket } from "../hooks/useSocket";
-import MessageForm from "../components/MessageForm";
 import MessageList from "../components/MessageList/MessageList";
+import MessageForm from "../components/MessageForm";
 
-function Chat() {
-  const [currentUser] = useState("Оксана");
-  const { messages, sendMessage } = useSocket(currentUser);
+interface ChatProps {
+  username: string;
+}
 
-  function handleSend(text: string) {
-    sendMessage(text);
-  }
-
+function Chat({ username }: ChatProps) {
   return (
     <div className="chat">
-      <MessageList messages={messages} currentUser={currentUser} />
-      <MessageForm onSend={handleSend} />
+      <MessageList currentUser={username} />
+      <MessageForm currentUser={username} />
     </div>
   );
 }

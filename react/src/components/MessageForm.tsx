@@ -1,35 +1,36 @@
-import "./MessageForm.css";
-import Button from "../shared/Button"
-import TextField from "../shared/TextField"
-import { useState } from "react"
+import Button from "../shared/Button";
+import TextField from "../shared/TextField";
+import { useState } from "react";
 
-// React.FormEvent<HTMLFormElement> - это тип события формы в React. Он используется для типизации объекта события,
-// который передается в обработчик события формы, такого как onSubmit. Этот тип обеспечивает доступ к свойствам и методам,
-// специфичным для событий форм, таких как предотвращение стандартного поведения формы (например, перезагрузка страницы при отправке).
 interface MessageFormProps {
-  onSend: (text: string) => void;
+  currentUser: string;      // добавляем сюда currentUser
+  onSend?: (text: string) => void; // если планируешь передавать функцию для отправки
 }
 
-function MessageForm({ onSend }: MessageFormProps) {
+function MessageForm({ currentUser, onSend }: MessageFormProps) {
   const [message, setMessage] = useState("");
 
-  function onSubmit(evt: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
-    if (message.trim() === "") return;
-    onSend(message);
+    if (onSend) {
+      onSend(message);
+    } else {
+      alert(`${currentUser} отправил сообщение: ${message}`);
+    }
     setMessage("");
   }
 
   return (
-    <form onSubmit={onSubmit} className="message-form">
+    <form onSubmit={handleSubmit}>
       <TextField
         value={message}
         onChange={setMessage}
         variant="textarea"
+        placeholder="Введите сообщение"
       />
       <Button label="Отправить" type="submit" />
     </form>
   );
 }
 
-export default MessageForm
+export default MessageForm;

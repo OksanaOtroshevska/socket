@@ -1,43 +1,28 @@
 import "./LoginForm.css";
 import { useState } from "react";
-import Button from "../shared/Button"
-import TextField from "../shared/TextField"
+import Button from "../shared/Button";
+import TextField from "../shared/TextField";
 
-function LoginForm() {
+export interface LoginFormProps {
+  onLogin: (username: string) => void;
+}
 
-  // useState - это хук, который позволяет добавлять состояние в функциональные компоненты React
-  // useState возвращает массив из двух элементов: текущее значение состояния и функцию для его обновления
-  // В данном случае состояние представляет собой строку, которая хранит имя пользователя
-  // Изначально состояние установлено в пустую строку ""
-  // setUsername - это функция, которая позволяет обновить значение состояния username
-  // Когда вызывается setUsername с новым значением, React перерисовывает компонент с обновленным состоянием
-  // Таким образом, useState позволяет компоненту LoginForm "запоминать" введенное пользователем имя
-  // и реагировать на его изменения
-  // React автоматически обновляет интерфейс при изменении состояния
-  // Это позволяет создавать интерактивные компоненты, которые могут изменяться в ответ на действия пользователя
-  // В данном случае, когда пользователь вводит имя в текстовое поле, вызывается функция setUsername
-  // с новым значением, что приводит к обновлению состояния username и перерисовке компонента с новым именем
-  // В итоге useState позволяет компоненту LoginForm быть динамичным и отзывчивым к действиям пользователя
-  // создавая более интерактивный и удобный интерфейс
-  const state = useState(""); 
-  const username = state[0]; 
-  const setUsername = state[1];
+function LoginForm({ onLogin }: LoginFormProps) {
+  const [username, setUsername] = useState("");
 
-  function onSubmit (evt: React.FormEvent<HTMLFormElement>) {
-    evt.preventDefault() ; // Предотвращает перезагрузку страницы при отправке формы
-    alert("Форма отправлена" + username);
+  function onSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    evt.preventDefault();
+    const name = username.trim();
+    if (!name) return;
+    onLogin(name);
   }
 
-// onSubmit- это обработчик события отправки формы
   return (
     <form className="login-form" onSubmit={onSubmit}>
-      <TextField 
-      value={username} 
-      onChange={setUsername} 
-      />
+      <TextField value={username} onChange={setUsername} placeholder="Введите имя" />
       <Button label="Войти" type="submit" />
     </form>
   );
 }
 
-export default LoginForm
+export default LoginForm;
