@@ -7,25 +7,30 @@ import DateBlock from "./Date"
 // Компонент возвращает JSX-разметку, которая включает в себя компонент Date и два компонента Message
 
 interface MessageData {
-  id: number
-  text: string
-  author: string
-  isOwn?: boolean
+  user: string;
+  text: string;
+  time?: string;
 }
 
-function MessageList() {
-  const messages: MessageData[] = [
-    { id: 1, author: "Оксана", text: "Привет!" },
-    { id: 2, author: "Алекс", text: "Привет, как дела?" }
-  ];
+interface MessageListProps {
+  messages: MessageData[];
+  currentUser: string;
+}
 
+function MessageList({ messages, currentUser }: MessageListProps) {
   return (
     <div className="message-list">
       <DateBlock date="25 September" />
-      <Message author="Оксана" text="Привет!" />
-      <Message author="Алекс" text="Привет, как дела?" />
+      {messages.map((msg, index) => (
+        <Message
+          key={index}
+          author={msg.user}
+          text={msg.text}
+          isOwn={msg.user === currentUser}
+        />
+      ))}
     </div>
-  )
+  );
 }
 
 export default MessageList

@@ -6,12 +6,12 @@ interface MessageProps {
   isOwn?: boolean; // свойство для определения цвета "моего" сообщения
 }
 
-function Message ({ author, text }: MessageProps) {
+function Message({ author, text, isOwn }: MessageProps) {
   return (
-   <div className="message">
-      <strong className="message__author">{author}:</strong>
-      <span className="message__text">{text}</span>
-   </div>
+    <div className={`message ${isOwn ? "own" : "other"}`}>
+      <div className="message-author">{author}</div>
+      <div className="message-text">{text}</div>
+    </div>
   );
 }
 
