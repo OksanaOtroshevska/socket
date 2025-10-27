@@ -6,12 +6,12 @@ interface MessageProps {
   isOwn?: boolean;
 }
 
-function Message({ author, text, isOwn }: MessageProps) {
+const Message: React.FC<MessageProps> = ({ author, text, isOwn }) => {
   return (
-    <div className={`message ${isOwn ? "my-message" : "other-message"}`}>
+    <div className={`message ${isOwn ? "own" : ""}`}>
       <b>{author}:</b> {text}
     </div>
   );
-}
+};
 
 export default Message;

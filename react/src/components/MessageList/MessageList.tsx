@@ -3,22 +3,18 @@ import Message from "./Message";
 import DateBlock from "./Date";
 
 interface MessageData {
-  id: number;
+  id: string;
   author: string;
   text: string;
   isOwn?: boolean;
 }
 
 interface MessageListProps {
+  messages: MessageData[];
   currentUser: string;
 }
 
-function MessageList({ currentUser }: MessageListProps) {
-  const messages: MessageData[] = [
-    { id: 1, author: "Оксана", text: "Привет!" },
-    { id: 2, author: "Алекс", text: "Привет, как дела?" },
-  ];
-
+const MessageList: React.FC<MessageListProps> = ({ messages, currentUser }) => {
   return (
     <div className="message-list">
       <DateBlock date="25 September" />
@@ -32,6 +28,6 @@ function MessageList({ currentUser }: MessageListProps) {
       ))}
     </div>
   );
-}
+};
 
 export default MessageList;

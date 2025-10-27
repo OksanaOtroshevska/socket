@@ -7,20 +7,16 @@ export interface MessageData {
   text: string;
 }
 
-export function useSocket(currentUser: string) {
-  const [socket, setSocket] = useState<Socket | null>(null);
+export const useSocket = (currentUser: string) => {
   const [messages, setMessages] = useState<MessageData[]>([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     const newSocket = io("http://localhost:3000");
     setSocket(newSocket);
 
-    newSocket.on("connect", () => {
-      console.log("Connected:", newSocket.id);
-    });
-
-    newSocket.on("message", (message: MessageData) => {
-      setMessages((prev) => [...prev, message]);
+    newSocket.on("message", (msg: MessageData) => {
+      setMessages((prev) => [...prev, msg]);
     });
 
     return () => {
@@ -36,7 +32,7 @@ export function useSocket(currentUser: string) {
         text,
       };
       socket.emit("message", message);
-      setMessages((prev: MessageData[]) => [...prev, message]); // ✅ теперь типизировано
+      setMessages((prev) => [...prev, message]); // локально показываем сразу
     }
   };
 

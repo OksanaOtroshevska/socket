@@ -1,35 +1,31 @@
-import { useUser } from "../context/UserNameContext";
 import { useState } from "react";
+import Button from "../shared/Button";
+import TextField from "../shared/TextField";
 
 interface MessageFormProps {
        // добавляем сюда currentUser
-  onSend?: (text: string) => void; // если планируешь передавать функцию для отправки
+  onSend: (text: string) => void; // если планируешь передавать функцию для отправки
 }
 
-function MessageForm({ onSend }: MessageFormProps) {
-  const [message, setMessage] = useState("");
-  const { username } = useUser(); // получаем имя пользователя из контекста
+const MessageForm: React.FC<MessageFormProps> = ({ onSend }) => {
+  const [text, setText] = useState("");
 
-
-  function handleSubmit(evt: React.FormEvent) {
-    evt.preventDefault();
-    if (!message.trim()) return;
-
-    console.log(`[${username}]: ${message}`);
-
-    if (onSend) onSend(message);
-    setMessage(""); // очищаем поле
-  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    onSend(text);
+    setText("");
+  };
 
   return (
     <form className="message-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Введите сообщение..."
+      <TextField
+        value={text}
+        onChange={setText}
+        placeholder="Введите сообщение"
+        variant="textarea"
       />
-      <button type="submit">Отправить</button>
+      <Button label="Отправить" type="submit" />
     </form>
   );
 }
