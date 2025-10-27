@@ -1,46 +1,51 @@
-import { useEffect, useState } from "react";
-import { io, Socket } from "socket.io-client";
+import { useEffect, useState } from "react"
+import { io, Socket } from "socket.io-client"
 
 export interface MessageData {
-  id: string;
-  author: string;
-  text: string;
+  id: string
+  author: string
+  text: string
 }
 
-// создаём глобальный сокет один раз
-const socket: Socket = io("http://localhost:3000");
+let socket: Socket | null = null
 
 export const useSocket = (currentUser: string) => {
-  const [messages, setMessages] = useState<MessageData[]>([]);
+  const [messages, setMessages] = useState<MessageData[]>([])
+  const [users, setUsers] = useState<string[]>([])
 
   useEffect(() => {
-    const handleMessage = (msg: MessageData) => {
-      setMessages((prev) => [...prev, msg]);
-    };
+    if (!socket) {
+      socket = io("http://localhost:5000")
+      console.log("🟢 Подключен новый socket:", socket.id)
 
-    // подписка на событие
-    socket.on("chat", handleMessage);
+      socket.on("chat", (msg: MessageData) => {
+        setMessages(prev => [...prev, msg])
+      })
 
-    // очистка при размонтировании
+      socket.on("users", (userList: string[]) => {
+        setUsers(userList)
+      })
+    }
+
+    // если пользователь задан, отправляем имя серверу
+    if (currentUser) {
+      socket.emit("register", currentUser)
+    }
+
     return () => {
-      socket.off("chat", handleMessage);
-    };
-  }, []); // пустой массив зависимостей — подписка один раз
+      // ничего не отключаем, чтобы соединение не разрывалось при ререндере
+    }
+  }, [currentUser])
 
   const sendMessage = (text: string) => {
-    if (!currentUser) return;
+    if (!socket) return
+    const id = socket.id || `temp-${Date.now()}`
+    const message: MessageData = { id, author: currentUser, text }
+    socket.emit("chat", message)
+    setMessages(prev => [...prev, message])
+  }
 
-    const message: MessageData = {
-      id: socket.id || `temp-${Date.now()}`,
-      author: currentUser,
-      text,
-    };
+  return { messages, users, sendMessage }
+}
 
-    socket.emit("chat", message);
-    setMessages((prev) => [...prev, message]);
-  };
-
-  return { messages, sendMessage };
-};
-
-export default useSocket;
+export default useSocket
