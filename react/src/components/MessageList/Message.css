@@ -1,23 +1,24 @@
 .message {
-  display: flex;
-  flex-direction: column;
-  background: #e7e7e7;
-  padding: 8px 12px;
-  border-radius: 8px;
-  max-width: 60%;
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #2b2b2b;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  word-break: break-word;
 }
 
 .message.own {
   align-self: flex-end;
-  background: #b3e5fc;
+  background: linear-gradient(135deg, #6a5acd, #8b6ff3);
 }
 
-.author {
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 4px;
+.message.other {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #2aa198, #38c6ad);
 }
 
-.text {
-  word-break: break-word;
+.message .author {
+  font-weight: 700;
+  margin-bottom: 6px;
 }
