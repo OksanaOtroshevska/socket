@@ -6,6 +6,7 @@ interface MessageData {
   id: number;
   author: string;
   text: string;
+  isOwn?: boolean;
 }
 
 interface MessageListProps {
@@ -15,7 +16,7 @@ interface MessageListProps {
 function MessageList({ currentUser }: MessageListProps) {
   const messages: MessageData[] = [
     { id: 1, author: "Оксана", text: "Привет!" },
-    { id: 2, author: "Алекс", text: "Привет, как дела?" }
+    { id: 2, author: "Алекс", text: "Привет, как дела?" },
   ];
 
   return (

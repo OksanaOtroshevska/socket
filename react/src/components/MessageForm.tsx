@@ -12,21 +12,18 @@ function MessageForm({ currentUser, onSend }: MessageFormProps) {
 
   function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
-    if (onSend) {
-      onSend(message);
-    } else {
-      alert(`${currentUser} отправил сообщение: ${message}`);
-    }
-    setMessage("");
+    if (!message.trim()) return;
+    onSend?.(message); // вызываем callback, если он передан
+    setMessage(""); // очищаем поле
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+ <form className="message-form" onSubmit={handleSubmit}>
       <TextField
         value={message}
         onChange={setMessage}
+        placeholder={`Сообщение от ${currentUser}`}
         variant="textarea"
-        placeholder="Введите сообщение"
       />
       <Button label="Отправить" type="submit" />
     </form>

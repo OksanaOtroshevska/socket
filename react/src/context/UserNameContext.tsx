@@ -5,18 +5,19 @@ interface UserContextValue {
   setUsername: (name: string) => void;
 }
 
-const UserContext = createContext<UserContextValue>({
+const UserNameContext = createContext<UserContextValue>({
   username: "",
   setUsername: () => {},
 });
 
-export const useUser = () => useContext(UserContext);
+export const useUser = () => useContext(UserNameContext);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [username, setUsername] = useState<string>("");
+
   return (
-    <UserContext.Provider value={{ username, setUsername }}>
+    <UserNameContext.Provider value={{ username, setUsername }}>
       {children}
-    </UserContext.Provider>
+    </UserNameContext.Provider>
   );
 };
