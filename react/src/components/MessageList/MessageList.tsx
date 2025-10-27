@@ -7,6 +7,7 @@ export interface MessageData {
   id: string
   author: string
   text: string
+  createdAt: string
   isOwn?: boolean
 }
 
@@ -29,9 +30,19 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUser }) => {
   return (
     <div className="message-list" ref={containerRef}>
       <DateBlock date="Сегодня" />
-      {messages.map(msg => (
-        <Message key={msg.id + msg.text} author={msg.author} text={msg.text} isOwn={msg.author === currentUser} />
-      ))}
+      {messages.map(msg => {
+        const date = new Date(msg.createdAt)
+        const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+        return (
+          <Message
+            key={msg.id}
+            author={msg.author}
+            text={msg.text}
+            isOwn={msg.author === currentUser}
+            date={formattedDate} // передаём в компонент Message
+          />
+        )
+      })}
     </div>
   )
 }
