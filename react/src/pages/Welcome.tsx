@@ -14,7 +14,7 @@ const Welcome: React.FC = () => {
     e.preventDefault();
 
     if (!name.trim()) {
-      alert("Введите имя, пожалуйста 🙂");
+      alert("Введите имя, пожалуйста");
       return;
     }
 
