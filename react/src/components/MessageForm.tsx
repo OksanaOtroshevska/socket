@@ -8,7 +8,7 @@ interface MessageFormProps {
 }
 
 const MessageForm: React.FC<MessageFormProps> = ({ onSend }) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

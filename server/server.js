@@ -14,7 +14,8 @@ const PORT = 3000;
 //создаем сокет сервер на базе http сервера
 const app = express();
 const httpServer = createServer(app);
-const socket = new Server(httpServer, {
+
+const io = new Server(httpServer, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -32,13 +33,16 @@ app.get("/", (request, response) => {
 //и при получении сообщения, отправлять его всем подключенным клиентам
 //connection.on("chat" - это событие получения сообщения от клиента
 //socket.emit("chat" - это отправка сообщения всем клиентам
-socket.on("connection", (connection) => {
-    console.log("New client connected", connection.id);
+io.on("connection", (socket) => {
+    console.log("New client connected", socket.id);
 
-connection.on("chat", msgData => {
-  socket.emit("chat", msgData)
-})
+socket.on("chat", msgData => {
+  socket.broadcast.emit("chat", msgData);
+});
 
+socket.on("disconnect", () => {
+    console.log("Client disconnected", socket.id);
+  });
 });
 
 //говорим, что наш сервер должен слушать 3000 порт на нашем компьютере

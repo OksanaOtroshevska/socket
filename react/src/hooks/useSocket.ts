@@ -7,36 +7,40 @@ export interface MessageData {
   text: string;
 }
 
+// создаём глобальный сокет один раз
+const socket: Socket = io("http://localhost:3000");
+
 export const useSocket = (currentUser: string) => {
   const [messages, setMessages] = useState<MessageData[]>([]);
-  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3000");
-    setSocket(newSocket);
-
-    newSocket.on("message", (msg: MessageData) => {
+    const handleMessage = (msg: MessageData) => {
       setMessages((prev) => [...prev, msg]);
-    });
-
-    return () => {
-      newSocket.disconnect();
     };
-  }, []);
+
+    // подписка на событие
+    socket.on("chat", handleMessage);
+
+    // очистка при размонтировании
+    return () => {
+      socket.off("chat", handleMessage);
+    };
+  }, []); // пустой массив зависимостей — подписка один раз
 
   const sendMessage = (text: string) => {
-    if (socket) {
-      const message: MessageData = {
-        id: socket.id || Math.random().toString(36).substring(2, 9), // запасной id
-        author: currentUser,
-        text,
-      };
-      socket.emit("message", message);
-      setMessages((prev) => [...prev, message]); // локально показываем сразу
-    }
+    if (!currentUser) return;
+
+    const message: MessageData = {
+      id: socket.id || `temp-${Date.now()}`,
+      author: currentUser,
+      text,
+    };
+
+    socket.emit("chat", message);
+    setMessages((prev) => [...prev, message]);
   };
 
   return { messages, sendMessage };
-}
+};
 
 export default useSocket;
