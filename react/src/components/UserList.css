@@ -1,0 +1,27 @@
+.user-list {
+  background: #f5f5ff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  max-width: 200px;
+  font-size: 14px;
+}
+
+.user-list h4 {
+  margin-bottom: 5px;
+  color: #6c63ff;
+}
+
+.user-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li {
+  margin-bottom: 4px;
+}
+
+.user-list li.me {
+  font-weight: bold;
+  color: #333;
+}

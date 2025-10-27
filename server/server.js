@@ -1,49 +1,41 @@
 import express from "express";
-import http from "http";
+import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 
 const app = express();
-app.use(cors());
-
-const server = http.createServer(app);
+const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
 
-// Храним пользователей: { socketId: username }
-const users = {};
+const users = new Map(); // <socket.id, username>
 
 io.on("connection", (socket) => {
-  console.log("✅ Новый клиент подключился:", socket.id);
+  console.log("🟢 Новое подключение:", socket.id);
 
-  // Пользователь присоединяется
-  socket.on("user:join", (username) => {
-    users[socket.id] = username;
-    console.log(`👤 ${username} вошёл в чат`);
-    io.emit("users:update", Object.values(users)); // отправляем всем список
+  // получаем имя от клиента
+  socket.on("register", (username) => {
+    users.set(socket.id, username);
+    io.emit("users", Array.from(users.values())); // рассылаем обновлённый список
   });
 
-  // Получение сообщений
-  socket.on("chat", (message) => {
-    io.emit("chat", message);
+  // получение сообщений
+  socket.on("chat", (msg) => {
+    socket.broadcast.emit("chat", msg);
   });
 
-  // Пользователь отключился
+  // при отключении
   socket.on("disconnect", () => {
-    const username = users[socket.id];
-    if (username) {
-      console.log(`❌ ${username} вышел`);
-      delete users[socket.id];
-      io.emit("users:update", Object.values(users));
-    }
+    console.log("🔴 Отключился:", socket.id);
+    users.delete(socket.id);
+    io.emit("users", Array.from(users.values())); // обновляем список
   });
 });
 
-const PORT = 5000;
-server.listen(PORT, () => {
-  console.log(`🚀 Сервер запущен на порту ${PORT}`);
+server.listen(5000, () => {
+  console.log("🚀 Сервер запущен на порту 5000");
 });
