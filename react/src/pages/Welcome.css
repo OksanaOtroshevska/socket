@@ -3,10 +3,43 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #7b2ff7, #f107a3);
+  color: white;
+  text-align: center;
 }
 
 .welcome__title {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.welcome__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 250px;
+}
+
+.welcome input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.welcome button {
+  background-color: #fff;
+  color: #7b2ff7;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.welcome button:hover {
+  background-color: #f1f1f1;
 }
