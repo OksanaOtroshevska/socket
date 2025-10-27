@@ -1,11 +1,10 @@
 import MessageList from "../components/MessageList/MessageList";
 import MessageForm from "../components/MessageForm";
+import { useUser } from "../context/UserNameContext";
 
-interface ChatProps {
-  username: string;
-}
+function Chat() {
+  const { username } = useUser();
 
-function Chat({ username }: ChatProps) {
   return (
     <div className="chat">
       <MessageList currentUser={username} />
