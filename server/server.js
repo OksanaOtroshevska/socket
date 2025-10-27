@@ -1,51 +1,49 @@
-//импортируем библиотеки
-//express - это библиотека для создания сервера на node.js
-//http - это встроенная библиотека для создания http сервера
-//socket.io - это библиотека для создания сокет сервера
-const express = require("express");
-const { createServer } = require("http");
-const { Server } = require("socket.io");
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import cors from "cors";
 
-
-const PORT = 3000;
-
-//создаем приложение на express
-//создаем http сервер на базе express
-//создаем сокет сервер на базе http сервера
 const app = express();
-const httpServer = createServer(app);
+app.use(cors());
 
-const io = new Server(httpServer, {
+const server = http.createServer(app);
+const io = new Server(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
   },
-})
-
-//request- это что приходит от клиента
-//response - это что мы отправляем клиенту
-//таким образом мы настроили наш express, что бы он работал как сервер по http
-app.get("/", (request, response) => {
-    response.sendFile(__dirname + "/index.html");
 });
 
-//говорим, что при подключении нового клиента, мы должны слушать его сообщения
-//и при получении сообщения, отправлять его всем подключенным клиентам
-//connection.on("chat" - это событие получения сообщения от клиента
-//socket.emit("chat" - это отправка сообщения всем клиентам
+// Храним пользователей: { socketId: username }
+const users = {};
+
 io.on("connection", (socket) => {
-    console.log("New client connected", socket.id);
+  console.log("✅ Новый клиент подключился:", socket.id);
 
-socket.on("chat", msgData => {
-  socket.broadcast.emit("chat", msgData);
-});
+  // Пользователь присоединяется
+  socket.on("user:join", (username) => {
+    users[socket.id] = username;
+    console.log(`👤 ${username} вошёл в чат`);
+    io.emit("users:update", Object.values(users)); // отправляем всем список
+  });
 
-socket.on("disconnect", () => {
-    console.log("Client disconnected", socket.id);
+  // Получение сообщений
+  socket.on("chat", (message) => {
+    io.emit("chat", message);
+  });
+
+  // Пользователь отключился
+  socket.on("disconnect", () => {
+    const username = users[socket.id];
+    if (username) {
+      console.log(`❌ ${username} вышел`);
+      delete users[socket.id];
+      io.emit("users:update", Object.values(users));
+    }
   });
 });
 
-//говорим, что наш сервер должен слушать 3000 порт на нашем компьютере
-httpServer.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+const PORT = 5000;
+server.listen(PORT, () => {
+  console.log(`🚀 Сервер запущен на порту ${PORT}`);
 });
