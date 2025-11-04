@@ -1,8 +1,47 @@
+:root {
+  --sky: #CFEFFD;
+  --turq: #4FC1C8;
+  --deep: #2B9AA3;
+  --warm-bg: #F1E9E1;
+  --cream: #E8DED4;
+  --accent: #6FC5FF;
+}
+
+/* Общий контейнер сообщений */
 .message-list {
-  max-height: 60vh;
-  overflow-y: auto;
-  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 14px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 18px;
+  scroll-behavior: smooth;
+  background: transparent;
+}
+
+/* Скролл — аккуратный */
+.message-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.message-list::-webkit-scrollbar-thumb {
+  background: rgba(111, 197, 255, 0.3);
+  border-radius: 3px;
+}
+
+.message-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(111, 197, 255, 0.5);
+}
+
+/* Дата */
+.date-block {
+  text-align: center;
+  margin: 10px auto;
+  font-size: 0.9rem;
+  color: rgba(20, 60, 70, 0.7);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.25));
+  padding: 4px 14px;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 6px rgba(50, 80, 90, 0.06);
 }

@@ -1,6 +1,15 @@
 .date-block {
-  text-align: center;
-  color: #777;
-  margin: 0.5rem 0;
-  font-size: 0.9rem;
+  font-family: "Manrope", sans-serif;
+  align-self: center;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(130, 209, 217, 0.8);
+  margin: 10px 0;
+  box-shadow: 0 2px 10px rgba(43, 154, 163, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }

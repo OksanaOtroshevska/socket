@@ -1,11 +1,61 @@
 .message-form {
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background-color: #f2f2f2;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
+  padding: 8px 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(43, 154, 163, 0.15);
+  transition: all 0.3s ease;
 }
 
-.message-form textarea {
+.message-form:hover {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 3px 12px rgba(43, 154, 163, 0.25);
+}
+
+.message-input {
   flex: 1;
   resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #064c54;
+  font-size: 1rem;
+  padding: 10px;
+  line-height: 1.4;
+  font-family: "Inter", sans-serif;
+}
+
+.message-input::placeholder {
+  color: rgba(6, 76, 84, 0.5);
+}
+
+.send-button {
+  background: linear-gradient(145deg, #4FC1C8, #2B9AA3);
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(43, 154, 163, 0.3);
+  transition: all 0.25s ease;
+}
+
+.send-button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(145deg, #5ad4da, #36a9b2);
+  box-shadow: 0 6px 16px rgba(43, 154, 163, 0.4);
+}
+
+.send-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(43, 154, 163, 0.25);
 }
