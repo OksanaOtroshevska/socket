@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, rgba(128, 222, 246, 0.6), rgba(250, 200, 174, 0.4));
+  background: linear-gradient(160deg, #e0f7fa, #97dfe7 35%, #d8c8c4 90%);
   backdrop-filter: blur(10px);
   font-family: "Poppins", sans-serif;
   overflow: hidden;
@@ -32,7 +32,7 @@
 .welcome__logo {
   width: 160px;
   margin-bottom: 1rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.2));
   animation: pulse 4s ease-in-out infinite, fadeIn 1.2s ease forwards;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .welcome__form button {
-  background: linear-gradient(135deg, #5fc2ba, #9bd8ce);
+  background: linear-gradient(135deg, #5f9cc2, #9bd8ce);
   color: #fff;
   border: none;
   border-radius: 12px;
