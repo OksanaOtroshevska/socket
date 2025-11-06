@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, rgba(180, 220, 230, 0.6), rgba(240, 235, 230, 0.4));
+  background: linear-gradient(135deg, rgba(128, 222, 246, 0.6), rgba(250, 200, 174, 0.4));
   backdrop-filter: blur(10px);
   font-family: "Poppins", sans-serif;
   overflow: hidden;
