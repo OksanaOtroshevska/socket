@@ -47,7 +47,6 @@
 | **Frontend** | React, TypeScript, CSS Modules |
 | **Backend** | Node.js, Express, Socket.IO |
 | **UI / UX** | Glassmorphism, адаптивный дизайн, плавные переходы |
-| **Инструменты** | Vite / Create React App, npm, Git |
 
 
 ---
