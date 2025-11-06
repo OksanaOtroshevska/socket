@@ -1,57 +1,59 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { io, Socket } from "socket.io-client"
 
 export interface MessageData {
-  id: string;
-  author: string;
-  text: string;
-  createdAt: string;
+  id: string
+  author: string
+  text: string
+  createdAt: string
 }
-
-let socket: Socket | null = null
 
 export const useSocket = (currentUser: string) => {
   const [messages, setMessages] = useState<MessageData[]>([])
   const [users, setUsers] = useState<string[]>([])
+  const socketRef = useRef<Socket | null>(null)
 
   useEffect(() => {
-    if (!socket) {
-      socket = io("http://localhost:5000")
-      console.log("Подключен новый socket:", socket.id)
+    const socket = io("http://localhost:5000", { transports: ["websocket"] })
+    socketRef.current = socket
 
-      socket.on("chat", (msg: MessageData) => {
-        setMessages(prev => [...prev, msg])
-      })
+    console.log("✅ Connected socket:", socket.id)
 
-      socket.on("users", (userList: string[]) => {
-        setUsers(userList)
-      })
-    }
+    socket.on("chat", (msg: MessageData) => {
+      setMessages(prev => [...prev, msg])
+    })
 
-    // если пользователь задан, отправляем имя серверу
+    socket.on("users", (userList: string[]) => {
+      setUsers(userList)
+    })
+
+    // регистрация пользователя
     if (currentUser) {
       socket.emit("register", currentUser)
     }
 
     return () => {
-      // ничего не отключаем, чтобы соединение не разрывалось при ререндере
+      socket.disconnect()
     }
   }, [currentUser])
 
   const sendMessage = (text: string) => {
+    const socket = socketRef.current
     if (!socket) return
-    const id = socket.id || `temp-${Date.now()}`
+
     const message: MessageData = {
-      id,
+      id: `${socket.id}-${Date.now()}`,
       author: currentUser,
       text,
-      createdAt: new Date().toISOString(), // добавляем дату и время
+      createdAt: new Date().toISOString(),
     }
+
+    // просто отправляем серверу — не добавляем в state вручную
     socket.emit("chat", message)
-    setMessages(prev => [...prev, message])
   }
 
   return { messages, users, sendMessage }
 }
 
 export default useSocket
+
